@@ -2558,8 +2558,6 @@ Single time initialization stuff.
 void TDM_Init (void)
 {
 	cvar_t		*var;
-	const char	*p;
-	int			revision;
 
 	HTTP_Init ();
 
@@ -2612,14 +2610,11 @@ void TDM_Init (void)
 	else if (g_gamemode->value == GAMEMODE_1V1)
 		dmflags = gi.cvar_set ("dmflags", g_1v1flags->string);
 
+#ifdef OPENTDM_REVISION
 	//show opentdm version to browsers
-	p = strchr (OPENTDM_VERSION, ':');
-	if (p)
-	{
-		p += 2;
-		revision = atoi (p);
-		gi.cvar ("revision", va("%d", revision), CVAR_SERVERINFO|CVAR_NOSET);
-	}
+	gi.cvar ("revision", va("%d", OPENTDM_REVISION), CVAR_SERVERINFO|CVAR_NOSET);
+	gi.cvar_set ("revision", va("%d", OPENTDM_REVISION));
+#endif
 
 	TDM_ResetGameState ();
 

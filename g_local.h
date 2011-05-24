@@ -30,11 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // the "gameversion" client command will print this plus compile date
 #define	GAMEVERSION	"OpenTDM"
 
-#ifdef OPENTDM_RELEASE
-#define	OPENTDM_VERSION	"1.0"
-#else
-#define	OPENTDM_VERSION "$Revision: 182 $"
-//dummy string to force g_local.h commit: asdf
+#ifndef	OPENTDM_VERSION
+#define	OPENTDM_VERSION "Unknown"
 #endif
 
 // protocol bytes that can be directly added to messages
