@@ -264,7 +264,19 @@ void TDM_Killed (edict_t *attacker, edict_t *victim, int mod)
 	if (!attacker->client)
 		return;
 
+	//Determine what weapon was used
 	tdmg = meansOfDeathToTDMG[mod];
+
+	//Not something we care about
+	if (!tdmg)
+		return;
+
+	//FIXME: observed a crash here due to NULL teamplayerinfo on victim
+	if (!victim->client->resp.teamplayerinfo)
+		TDM_Error ("TDM_Killed: Trying to track stats but no teamplayerinfo for victim %s, attacker %s", victim->client->pers.netname, attacker->client->pers.netname);
+
+	if (!attacker->client->resp.teamplayerinfo)
+		TDM_Error ("TDM_Killed: Trying to track stats but no teamplayerinfo for attacker %s, victim %s", attacker->client->pers.netname, victim->client->pers.netname);
 
 	attacker->client->resp.teamplayerinfo->killweapons[tdmg]++;
 	victim->client->resp.teamplayerinfo->deathweapons[tdmg]++;
