@@ -1007,6 +1007,11 @@ void Cmd_Say_f (edict_t *ent, qboolean team, qboolean arg0)
 	if (!*(text + expandpoint))
 		return;
 
+	// replace special characters
+	for (p = text + expandpoint; *p; p++)
+		if (*p == '\r' || *p == '\n' || *p == 127)
+			*p = '.';
+
 	strcat(text, "\n");
 
 	//wision: fixed.. but still dunno how it does work :x
