@@ -25,20 +25,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_tdm.h"
 
 #ifdef HAVE_CURL
-#define CURL_STATICLIB
-#ifdef _WIN32
-#define CURL_CALLING_CONVENTION __cdecl
-#endif
-#include <curl/curl.h>
 
 #ifdef _WIN32
-#include <Winsock2.h>
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <winsock2.h>
 #else
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
 #endif
+
+#include <curl/curl.h>
 
 typedef struct dlhandle_s
 {

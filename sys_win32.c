@@ -54,7 +54,11 @@ void Sys_FindClose (void)
 
 void Sys_DebugBreak (void)
 {
+#ifdef _MSC_VER
 	__asm int 3;
+#else
+	__asm__ ("int $3");
+#endif
 }
 
 #endif

@@ -51,6 +51,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // q_shared.h -- included first by ALL program modules
 
 #ifdef _WIN32
+#ifdef _MSC_VER
 // unknown pragmas are SUPPOSED to be ignored, but....
 //#pragma warning(disable : 4244)     // MIPS
 //#pragma warning(disable : 4136)     // X86
@@ -85,6 +86,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma intrinsic(memcmp)
 //#pragma intrinsic(memset)
+#endif
 
 #if _MSC_VER >= 1400
 #define NORETURN __declspec(noreturn)
@@ -97,7 +99,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define sqrtf sqrt
 #endif
 
+#ifndef alloca
 #define alloca _alloca
+#endif
 #define snprintf _snprintf
 #define vsnprintf _vsnprintf
 #define	Q_strlwr _strlwr
@@ -115,14 +119,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define filelength _filelength
 #define stricmp _stricmp
 #define putenv _putenv
+#ifdef __GNUC__
+#define EXPORT __attribute__((callee_pop_aggregate_return(0)))
+#define IMPORT __attribute__((callee_pop_aggregate_return(0)))
+#else
 #define EXPORT __cdecl
 #define IMPORT __cdecl
+#endif
+#define DLL_EXPORT __declspec(dllexport)
 //#if !defined _M_AMD64
  //#define DEBUGBREAKPOINT __asm int 3
 //#else
  //#define DEBUGBREAKPOINT DebugBreak
 //#endif
+#ifndef __GNUC__
 #define __attribute__(x) 
+#endif
 #define PACKED_STRUCT
 typedef __int32 int32;
 typedef __int16 int16;
@@ -148,6 +160,7 @@ typedef uint64_t uint64;
 #define Q_strncasecmp strncasecmp
 #define EXPORT
 #define IMPORT
+#define DLL_EXPORT __attribute__((visibility("default"), externally_visible))
 void Q_strlwr (char *str);
 int Q_vsnprintf (char *buff, size_t len, const char *fmt, va_list va);
 //int Q_snprintf (char *buff, size_t len, const char *fmt, ...);
