@@ -2101,7 +2101,8 @@ static char	openTDMBanner[32];
 
 void UpdatePlayerTeamMenu (edict_t *ent)
 {
-	void		*teamJoinLeaveFunc[MAX_TEAMS];
+	typedef void (*funptr)(edict_t *);
+	funptr teamJoinLeaveFunc[MAX_TEAMS];
 	unsigned	i;
 
 	memcpy (ent->client->pers.joinmenu, joinmenu, sizeof(joinmenu));
@@ -2823,6 +2824,7 @@ void TDM_UpdateConfigStrings (qboolean forceUpdate)
 			//note, we shouldn't need to do anything when we are mm_countdown, but fall through just to be safe
 			case MM_COUNTDOWN:
 				gi.configstring (CS_TDM_GAME_STATUS, "Countdown");
+				/* FALLTHROUGH */
 			case MM_WARMUP:
 				if (tdm_match_status == MM_WARMUP)
 					gi.configstring (CS_TDM_GAME_STATUS, "Warmup");
@@ -2932,9 +2934,9 @@ void TDM_UpdateConfigStrings (qboolean forceUpdate)
 			last_secs = secs;
 
 			mins = secs / 60;
-			secs -= (mins * 60);
+			secs %= 60;
 
-			sprintf (time_buffer, "%2d:%.2d", mins, secs);
+			snprintf(time_buffer, sizeof(time_buffer), "%2u:%.2u", mins, secs);
 
 			if (last_secs < 60)
 				TDM_SetColorText (time_buffer);
@@ -2968,9 +2970,9 @@ void TDM_UpdateConfigStrings (qboolean forceUpdate)
 			last_secs = secs;
 
 			mins = secs / 60;
-			secs -= (mins * 60);
+			secs %= 60;
 
-			sprintf (time_buffer, "%2d:%.2d", mins, secs);
+			snprintf(time_buffer, sizeof(time_buffer), "%2u:%.2u", mins, secs);
 
 			if (last_secs < 60)
 				TDM_SetColorText (time_buffer);
@@ -3014,7 +3016,12 @@ void TDM_Error (const char *fmt, ...)
 		if (!ent->inuse)
 			continue;
 
-		gi.dprintf ("%d: %s, connected %d, team %d, info %p\n", (int)(ent - g_edicts - 1), ent->client->pers.netname, ent->client->pers.connected, ent->client->pers.team, ent->client->resp.teamplayerinfo);
+		gi.dprintf ("%d: %s, connected %d, team %d, info %p\n",
+			    (int)(ent - g_edicts - 1),
+			    ent->client->pers.netname,
+			    ent->client->pers.connected,
+			    ent->client->pers.team,
+			    (void*)ent->client->resp.teamplayerinfo);
 	}
 
 	gi.error ("%s", text);
