@@ -19,7 +19,7 @@ WINDRES ?= windres
 STRIP ?= strip
 RM ?= rm -f
 
-CFLAGS ?= -O2 -fno-strict-aliasing -g -Wall -Wno-unused -MMD $(INCLUDES)
+CFLAGS ?= -O2 -g -Wall -Wno-unused -MMD $(INCLUDES)
 LDFLAGS ?= -shared
 LIBS ?=
 

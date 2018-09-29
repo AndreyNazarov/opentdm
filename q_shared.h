@@ -220,25 +220,6 @@ void init_genrand(uint32 s);
 #define NULL ((void *)0)
 #endif
 
-#ifdef _WIN32
-#define FLOAT2INTCAST(f)(*((int32 *)(&f)))
-#define FLOAT2UINTCAST(f)(*((uint32 *)(&f)))
-#define FLOAT_LT_ZERO(f) (FLOAT2UINTCAST(f) > 0x80000000U)
-#define FLOAT_LE_ZERO(f) (FLOAT2INTCAST(f) <= 0)
-#define FLOAT_GT_ZERO(f) (FLOAT2INTCAST(f) > 0)
-#define FLOAT_GE_ZERO(f) (FLOAT2UINTCAST(f) <= 0x80000000U)
-#define	FLOAT_EQ_ZERO(f) (FLOAT2INTCAST(f) == 0)
-#define	FLOAT_NE_ZERO(f) (FLOAT2INTCAST(f) != 0)
-#else
-//gcc breaks ieee compatibility with -ffast-math? i guess since these break horribly on linux
-#define	FLOAT_LT_ZERO(f) ((f) < 0)
-#define FLOAT_LE_ZERO(f) ((f) <= 0)
-#define FLOAT_GT_ZERO(f) ((f) > 0)
-#define FLOAT_GE_ZERO(f) ((f) >= 0)
-#define	FLOAT_EQ_ZERO(f) ((f) == 0)
-#define	FLOAT_NE_ZERO(f) ((f) != 0)
-#endif
-
 //terminating strncpy
 #define Q_strncpy(dst, src, len) \
 do { \
