@@ -3037,10 +3037,8 @@ qboolean TDM_ProcessText (char *buff, int len, qboolean (*func)(char *, int, voi
 {
 	char		line[256];
 	char		*q;
-	char		*ptr;
 	int			line_number;
 
-	ptr = buff;
 	q = buff;
 
 	line_number = 1;

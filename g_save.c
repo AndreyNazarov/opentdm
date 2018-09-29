@@ -130,7 +130,6 @@ is loaded.
 */
 void InitGame (void)
 {
-	cvar_t	*g_features;
 	cvar_t	*sv_features;
 
 	gi.dprintf ("==== InitGame ====\n");
@@ -296,7 +295,7 @@ void InitGame (void)
 	//game/server feature suppotr - export what we support and read what the server supports
 
 	//ensure it has NOSET if it didn't exist
-	g_features = gi.cvar ("g_features", "0", CVAR_NOSET);
+	(void)gi.cvar ("g_features", "0", CVAR_NOSET);
 	gi.cvar_forceset ("g_features", va("%d", GMF_CLIENTNUM | GMF_WANT_ALL_DISCONNECTS | GMF_PROPERINUSE | GMF_MVDSPEC));
 
 	//init server features

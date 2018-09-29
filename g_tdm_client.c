@@ -570,16 +570,14 @@ Create player's own customized dm_statusbar.
 const char *TDM_CreatePlayerDmStatusBar (playerconfig_t *c)
 {
 	static char	*dm_statusbar;
-	int			id_x, id_y, id_highlight;
+	int			id_x, id_y;
 
 	// opentdm default
-	id_highlight = 0;
 	id_x = -100;
 	id_y = -80;
 
 	id_x += c->id_x;
 	id_y += c->id_y;
-	id_highlight = c->id_highlight;
 
 	dm_statusbar = va (
 "yb	-24 "

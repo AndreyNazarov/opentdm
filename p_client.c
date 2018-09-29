@@ -1454,7 +1454,6 @@ void ClientUserinfoChanged (edict_t *ent, char *userinfo)
 	const char		*old_name;
 	const char		*old_stats_id;
 	int				playernum;
-	qboolean		name_changed;
 	qboolean		do_config_download;
 
 	//new connection, server is calling us. just save userinfo for later.
@@ -1491,8 +1490,6 @@ void ClientUserinfoChanged (edict_t *ent, char *userinfo)
 		do_config_download = true;
 	else
 		do_config_download = false;
-
-	name_changed = false;
 
 	old_name = Info_ValueForKey (ent->client->pers.userinfo, "name");
 
@@ -1661,7 +1658,7 @@ Will be called between levels on supported servers.
 */
 void ClientDisconnect (edict_t *ent)
 {
-	int			playernum;
+	//int			playernum;
 	qboolean	wasInUse;
 
 	if (!ent->client)
@@ -1698,7 +1695,7 @@ void ClientDisconnect (edict_t *ent)
 	if (wasInUse && !ent->client->pers.mvdclient)
 		gi.bprintf (PRINT_HIGH, "%s disconnected\n", ent->client->pers.netname);
 
-	playernum = ent-g_edicts-1;
+	//playernum = ent-g_edicts-1;
 
 	//zero pers in preparation for new client
 	memset (&ent->client->pers, 0, sizeof(ent->client->pers));
