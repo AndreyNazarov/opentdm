@@ -2614,7 +2614,7 @@ void TDM_Init (void)
 #ifdef OPENTDM_REVISION
 	//show opentdm version to browsers
 	gi.cvar ("revision", va("%d", OPENTDM_REVISION), CVAR_SERVERINFO|CVAR_NOSET);
-	gi.cvar_set ("revision", va("%d", OPENTDM_REVISION));
+	gi.cvar_forceset ("revision", va("%d", OPENTDM_REVISION));
 #endif
 
 	TDM_ResetGameState ();
